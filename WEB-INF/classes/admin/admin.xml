@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+
+	<package name="admin" namespace="/admin" extends="AdminDefault">	
+		
+		<action name="" >
+			<result name="success" type="redirect">
+				/admin/classroom/teachBuildingAction 
+			</result>
+		</action>
+
+<!-- 		<action name="user_request"> -->
+<!-- 			<result> -->
+<!-- 				/jsp/admin/users_request.jsp -->
+<!-- 			</result> -->
+<!-- 		</action> -->
+		
+		<action name="student_manage">
+			<result>
+				/jsp/admin/student_manage.jsp
+			</result>
+		</action>
+		
+		<action name="user_information" class="admin.InformationAction" method="adminInformation">
+			<result name="success">
+				/jsp/admin/admin_information.jsp
+			</result>
+		</action>
+		
+		<action name="admin_information_change" class="admin.InformationAction" method="adminInformationChange">
+           <result name="success" type="json">
+            	<param name="includeProperties">username,fullName,phoneNumber,sex,unitInfo,remark</param>           
+            </result>           
+        </action>
+		
+		<action name="repertory" class="admin.RepertoryAction">
+			<result name="success">
+				/jsp/admin/repertory.jsp
+			</result>
+		</action>
+		
+		<action name="repertory_*" class="admin.RepertoryAction" method="{1}">
+			<result name="success" type="json">
+
+			</result>
+		</action> 
+		<!-- 修改密码 -->
+		<action name="modifypassword" class="admin.ModifyPasswordAction">
+			<result name="success">
+				/jsp/admin/modify_password.jsp
+			</result>
+		</action>
+		
+		<action name="modify_password" class="admin.ModifyPasswordAction" method="modifyPassword">
+			<result name="success" type="json">
+			</result>
+		</action>
+
+
+
+		<!-- 管理员账号管理 Action -->
+		<action name="adminaccount" class="admin.AdminAccountAction" method="initallAdminProfilelist">
+			<result>/jsp/admin/adminAccount.jsp</result>
+		</action>
+		  
+		<action name="addNewAdminProfile" class="admin.AdminAccountAction" method="addNewAdminProfile">
+			<result name="success" type="json">
+				<param name="includeProperties">result</param>
+			</result>  
+		</action>
+		<action name="deleteAdminProfile" class="admin.AdminAccountAction" method="deleteAdminProfile">
+			<result name="success" type="json">
+				<param name="includeProperties">result</param>
+			</result>   
+			<result name="error" type="json">
+				<param name="includeProperties">result</param>
+			</result>  
+		</action>
+		
+<!-- 		批量导入 -->
+		<action name="batchImport" class="admin.BatchImportAction" >
+			<result>/jsp/admin/batchImport.jsp</result>
+		</action>
+		
+		<action name="batchImport_*" class="admin.BatchImportAction" method="{1}">
+			<result name="success" type="json"></result>
+		</action>
+<!-- 		end 批量导入 -->
+		
+	</package>
+	
+	
+<!-- 	新classroom -->
+	<package name="newAdminClassroom" namespace="/admin/classroom" extends="AdminDefault,newClassroom">
+		
+	</package>
+<!-- end	新classroom -->
+	
+	
+		       
+	
+	<!-- 教室设备管理 -->
+	<package name="classroomDevice" namespace="/admin/classroomDevice" extends="AdminDefault">
+		<action name="maintainRecords" class="admin.TeachBuildingAction">
+			<result>
+				/jsp/admin/maintainRecords.jsp
+			</result>
+		</action>
+		
+		<action name="*_action" class="action.RepairAction" method="{1}">
+			<result name="query_repair">
+				/jsp/admin/record_query.jsp
+			</result>
+			<result type="json" name="adddevice">
+				<param name="includeProperties">ret</param>
+			</result>
+			<result name="alternative">
+				/jsp/admin/alternative.jsp
+			</result>
+			<result name="move2alter" type="redirect">
+				../classroom/classroom_detail.action?classroomId=${classroom_id}
+			</result>
+			<result name="addalter" type="redirect">
+				../classroom/classroom_detail.action?classroomId=${classroom_id}
+			</result>
+			<result name="delalter" type="redirectAction">
+				alter_action?classroomid=${classroom_id}
+			</result>
+		</action>
+		
+		<action name="equipmentQueryAndEdit">
+			<result>
+				/jsp/admin/equipmentQueryAndEdit.jsp
+			</result>
+		</action>
+	
+	</package>
+	
+	
+<!-- 	用户注册请求 -->
+	<package name="user_request" namespace="/admin/user_request" extends="AdminDefault">
+		
+		<action name="" >
+			<result name="success" type="redirect">untreated</result>
+		</action>
+		
+		<action name="untreated" class="admin.RequestAction" method="studentRequest">
+			<result>
+				/jsp/admin/untreated.jsp
+			</result>
+
+		</action>
+		
+		<action name="request_ensure" class="admin.RequestAction" method="studentRequestEnsure">
+			<result name="success" type="json">
+				<param name="includeProperties">strValue,userid</param>
+			</result>
+		</action>
+		
+		<action name="request_change" class="admin.RequestAction" method="studentRequestChange">
+			<result name="success" type="json">
+				<param name="includeProperties">strValue,userid</param>
+			</result>
+		</action>
+
+		<action name="handled" class="admin.RequestAction" method="studentRequestResult">
+			<result>
+				/jsp/admin/handled.jsp
+			</result>
+
+		</action>
+
+	</package>
+<!-- 	end用户注册请求 -->
+
+
+
+
+
+	<package name="student_manage" namespace="/admin/student_manage"
+		extends="AdminDefault">
+		
+		<action name="" >
+			<result name="success" type="redirect">student_information</result>
+		</action>
+		
+		
+		<!-- 学生信息 -->
+		<action name="student_information" class="admin.StudentManageAction" method="studentInformation">
+			<result>
+				/jsp/admin/student_manage/student_information.jsp
+			</result>
+		</action>
+		
+		<!-- 规章制度 -->
+		<!-- <action name=rules class="admin."></action> -->
+		<action name="rule_show" class="admin.StudentManageAction" method="showRules">
+			<result name="success" >
+				/jsp/admin/student_manage/student_manage_rules.jsp
+			</result>
+		</action>
+		<action name="ruleEdit" class="admin.StudentManageAction" method="editRules">
+			<result name="success" type="json">
+			
+			</result>
+		</action>
+		
+		<!-- 技术培训 -->
+		<action name="training" class="admin.TrainingAction">
+			<result name="success">
+				/jsp/admin/student_manage/training.jsp
+			</result>
+		</action>
+		
+		<action name="training_*" class="admin.TrainingAction" method="{1}">
+			<result name="success" type="json"></result>
+		</action> 
+		
+		
+
+		<!-- 获取学生信息 -->
+		<action name="get_student_information" class="admin.StudentManageAction" method="getStudentInformation">
+           <result name="success" type="json">
+            	<param name="includeProperties">fullName,sex,studentId,college,phoneNumber,isUpgradePrivilege,bankCard,idCard</param>           
+           </result>           
+        </action>
+		
+        
+        <!-- 删除学生信息 -->
+		<action name="student_manage_delete" class="admin.StudentManageAction" method="studentInformationDelete">
+			<result name="success" type="json">
+            	<param name="includeProperties">fullName,studentId,college,phoneNumber</param>           
+           </result>       
+        </action>
+        
+        <!-- 保存学生信息 -->
+		<action name="student_information_save" class="admin.StudentManageAction" method="saveStudentInformation">
+            <result name="success" type="json">
+            <param name="includeProperties">fullName,studentId,college,phoneNumber</param>
+			</result>        
+        </action>
+        
+        <!-- 检索学生信息 -->
+        <action name="student_information_search" class="admin.StudentManageAction" method="searchStudentInformation">
+            <result name="success" type="json">
+            <param name="includeProperties">isEmpty,student_profile_id,fullName,studentId,sex,college,phoneNumber,isUpgradePrivilege,bankCard,idCard,score</param>
+			</result>        
+        </action>
+        
+        <!-- 学生值班管理 -->
+        <action name="duty_manage" class="admin.StudentManageAction" method="dutyManager">
+        	<result>/jsp/admin/student_manage/dutyManage.jsp</result>
+        </action>
+        
+        <!-- 获取值班表 -->
+        <action name="getDutyTable" class="admin.StudentManageAction" method="getDutyTable">
+        	<result type="json">
+        		<param name="includeProperties">
+        			dutySchedule\[\d+\]\.studentId,
+        			dutySchedule\[\d+\]\.studentName,
+        			dutySchedule\[\d+\]\.time,
+        			teachBuildingId,
+        		</param>
+        	</result>
+        </action>
+        
+        <!-- 改变开关状态 -->
+        <action name="switchStatuChange" class="admin.StudentManageAction" method="switchStatuChange">
+        	<result type="json">
+        		<param name="includeProperties">log</param>
+        	</result>
+        </action>
+        
+        <!-- 删除选班 -->
+        <action name="deleteDuty" class="admin.StudentManageAction" method="deleteDuty">
+        	<result type="json">
+        		<param name="includeProperties">log</param>
+        	</result>
+        </action>
+       	<!-- 搜索学生 -->
+       	<action name="searchStudent" class="admin.StudentManageAction" method="searchStudent">
+       		<result type="json">
+       			<param name="includeProperties">
+       				searchResult\[\d+\]\.id,
+       				searchResult\[\d+\]\.studentName,
+       				searchResult\[\d+\]\.studentId,
+       			</param>
+       		</result>
+       	</action>
+       	<!-- 添加值班 -->
+       	<action name="dutyAdd" class="admin.StudentManageAction" method="dutyAdd">
+       		<result type="json">
+       			<param name="includeProperties">
+       				log
+       			</param>
+       		</result>
+       	</action>
+       
+        
+	</package>  
+	<!-- student_manage package end-->
+	
+	
+	
+	<package name="classroom_json" namespace="/admin/classroom_json" extends="AdminDefault">
+		<action name="classroom_search" class="admin.ClassroomManageAction" method="classroom_search">
+			<result type="json">
+				<param name="includeProperties">
+					search_classroom_id, status, classroominfo_html, 
+					classrooms\[\d+\]\.id, classrooms\[\d+\]\.classroom_num, classrooms\[\d+\]\.capacity, classrooms\[\d+\]\.principal_name, classrooms\[\d+\]\.principal_stuId, classrooms\[\d+\]\.repertorys
+				</param>
+			</result>
+		</action>
+		<!-- 检查记录 -->
+		<action name="checkrecord_save" class="admin.ClassroomDetailAction" method="checkrecordsave">
+			<result type="json">
+				<param name="includeProperties">savestatus,checkrecord_jsp</param>
+			</result>
+		</action>
+		<!-- 维修记录 -->
+		<action name="repairrecord_save" class="admin.ClassroomDetailAction" method="repairrecordsave">
+			<result type="json">
+				<param name="includeProperties">savestatus,repairrecord_jsp</param>
+			</result>
+		</action>
+		<!-- 移入维修move2repair -->
+		<action name="move2repair" class="admin.ClassroomDetailAction" method="move2repair">
+			<result type="json">
+				<param name="includeProperties">savestatus,device_jsp</param>
+			</result>
+		</action>
+		
+		<!-- 移入报废move2bad -->
+		<action name="move2bad" class="admin.ClassroomDetailAction" method="move2bad">
+			<result type="json">
+				<param name="includeProperties">savestatus,device_jsp</param>
+			</result>
+		</action>
+		
+		<!-- 备用设备 -->
+		<action name="alterdevice" class="admin.ClassroomDetailAction" method="alterdevice">
+			<result type="json">
+				<param name="includeProperties">device_jsp,alterdevice_jsp</param>
+			</result>
+		</action>
+		
+		<!-- 加入教室 -->
+		<action name="move2class" class="admin.ClassroomDetailAction" method="move2class">
+			<result type="json">
+				<param name="includeProperties">device_jsp,alterdevice_jsp</param>
+			</result>
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<action name="queryStuNameByStuId" class="admin.ClassroomManageAction" method="queryStuNameByStuId">
+			<result type="json">
+				<param name="includeProperties">queryResult</param>
+			</result>
+		</action>
+		<action name="addClassroom" class="admin.ClassroomManageAction" method="addClassroom">
+			<result type="json">
+				<param name="includeProperties">add_status</param>
+			</result>
+		</action>
+		<action name="addTeachBuilding" class="admin.TeachBuildingAction" method="addTeachBuilding">
+			<result type="json">
+				<param name="includeProperties">add_status</param>
+			</result>
+		</action>
+	</package>
+	
+	<!-- 教室管理 -->
+	<package name="classroom" namespace="/admin/classroom" extends="AdminDefault">
+		<action name="">
+			<result type="redirect">teachBuildingAction</result>
+		</action>
+		
+		<action name="teachBuildingAction" class="admin.TeachBuildingAction">
+			<result>
+				/jsp/admin/teachbuilding.jsp
+			</result>
+		</action>
+		
+		<action name="classroom_manage" class="admin.ClassroomManageAction" method="classroomList">
+			<result>
+				<param name="location">/jsp/admin/classroom_manage.jsp</param>
+				<param name="build_id">${build_id}</param>
+				<param name="build_name">${build_name}</param>
+			</result>
+		</action>
+		
+		<!--action name="classroom_select" class="admin.ClassroomManageAction" method="classroom_select">
+			<result type="redirectAction">
+				<param name="actionName">classroom_detail</param>
+				<param name="classroomselectIndex">${classroomselectIndex}</param>
+			</result>
+		</action-->
+		<action name="classroom_detail" class="admin.ClassroomDetailAction">
+			<result>
+				<param name="location">/jsp/admin/classroom_detail.jsp</param>
+				<!-- <param name="build_id">${classroom_id}</param>
+				<param name="build_name">${classroom_num}</param> -->
+				<param name="classroomselectIndex">${classroomId}</param>
+				<param name="build_name">${build_name}</param>
+			</result>
+		</action>
+		
+		
+		<!-- 上传照片 -->
+        <action name="picture_upload" class="admin.ClassroomDetailAction" method="PictureUpload">
+            <result name="success" type="json">
+            <param name="includeProperties"></param>
+			</result>        
+        </action>
+        
+        <!-- 删除照片 -->
+        <action name="picture_delete" class="admin.ClassroomDetailAction" method="PictureDelete">
+            <result name="success" type="json">
+            <param name="includeProperties"></param>
+			</result>        
+        </action>
+        
+        <!-- 上传课表 -->
+        <action name="schedule_upload" class="admin.ClassroomDetailAction" method="ScheduleUpload">
+            <result name="success" type="json">
+            <param name="includeProperties"></param>
+			</result>        
+        </action>
+		
+		
+	</package>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<package name="HomepageModify" namespace="/admin/HomepageModify" extends="AdminDefault">
+	
+		<action name="" >
+			<result name="success" type="redirect"> /admin/HomepageModify/notice</result>
+		</action>
+		
+		<action name="resourceFileManage"  class="admin.ResourceFileUploadAction">
+			<result>
+				/jsp/admin/HomepageModify/resourceFileManage.jsp
+			</result>			
+		</action>
+		<action name="FileUploadInsert"  class="admin.ResourceFileUploadAction" method ="insert">
+			<result type="json">				
+			</result>			
+		</action>
+		
+<!--常见问题的action设置  -->		
+        <action name="CommonProblem" class = "admin.CommonProblemAction">
+			<result name="success">
+				/jsp/admin/HomepageModify/CommonProblem.jsp
+			</result>
+		</action>
+		<action name="CommonProblem_*"  class="admin.CommonProblemAction" method ="{1}">
+			<result type="json">				
+			</result>			
+		</action>
+	
+<!--公告的action设置 
+		<action name="notice" class="admin.NoticeAction">
+			<result name="success">
+			/jsp/admin/HomepageModify/notice.jsp
+			</result>
+		</action> -->
+		<!-- 尝试分页 -->
+		<action name="notice" class="admin.NoticeAction" method="resourceFile">
+			<result name="success">
+			/jsp/admin/HomepageModify/noticePage.jsp
+			</result>
+		</action> 
+        <action name="notice_*" class="admin.NoticeAction" method="{1}">
+        <result name="success" type="json">
+<!--             	<param name="includeProperties">status,notice_id</param>            -->
+				
+          </result> 
+        </action>
+    </package>
+    
+    
+    
+    
+</struts>
+
+
+
+
+
+
+
+
+
