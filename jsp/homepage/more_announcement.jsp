@@ -5,12 +5,12 @@
 
 <div class="row news_frame">
   <div class="col-lg-6" style="width:98%; margin:10px">
-    <!--news base template-->
+    
 		<div class="">
 		
-		  <div class="front-wrap" style="height:500px">
-		    <div class="home-news">
-		      
+		  <div class="front-wrap" style="height:auto!important;">
+		    <div class="home-news" >
+
 		      <div class="usoft-listview-header">
 		        <h3>通知公告          <small>ANNOUNCEMENT </small> </h3> 
 		      </div>
@@ -22,6 +22,8 @@
 		    
 		    </div>
 		  </div> 
+		  
+		  
 		</div>
     </div>
 </div>
