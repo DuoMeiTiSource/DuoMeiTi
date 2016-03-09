@@ -390,6 +390,13 @@
 		<action name="teachBuildingAction" class="admin.TeachBuildingAction">
 			<result>
 				/jsp/admin/teachbuilding.jsp
+				
+			</result>
+		</action>
+		
+		<action name="build_delete" class="admin.TeachBuildingAction" method="BuildingDelete">
+			<result name="success" type="json">
+				<param name="includeProperties">strValue,status,buildId</param>
 			</result>
 		</action>
 		
