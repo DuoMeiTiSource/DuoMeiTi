@@ -64,10 +64,10 @@
 					</tr>
 				</s:iterator>  --%>
 				
-				<s:iterator begin="0" end="builds.size()-1" var="i" step="3">
+				<s:iterator begin="0" end="builds.size()-1" var="i" step="5">
 					<tr class="">
 					
-						<s:iterator  var="j" begin="0" end="@@min(builds.size()-#i-1,2)" step="1">
+						<s:iterator  var="j" begin="0" end="@@min(builds.size()-#i-1,4)" step="1">
 							<td
 								build_name='<s:property value="builds.get(#i+#j).build_name"/>'
 								build_id='<s:property value="builds.get(#i+#j).build_id"/>'
@@ -130,15 +130,17 @@
 		        type: 'post',
 		        dataType: 'json',
 		        data:{buildId:id},
-		        success:deleteCallBack
+		        success: deleteCallBack
 			});
 		}
 	})
 	
 	function deleteCallBack(data){
 		if(data.status == 0){
-			var td = $("td[build_id='"+data.buildId+"']")
-			td.html("");
+			/* var td = $("td[build_id='"+data.buildId+"']");
+			td.html(""); */
+			location.reload() 
+			alert("删除成功！");
 		}
 		else alert("请先删除教室！");
 	}
