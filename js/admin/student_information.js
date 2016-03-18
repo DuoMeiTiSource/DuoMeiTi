@@ -63,8 +63,12 @@ $(document).on("click", ".delete", function() {
 })
 
 function deleteCallback(data) {
+	if(data.isException=="1"){
+		alert("学生存在关联数据，无法删除！")
+	}else{
+		alert("删除成功！");
+	}
 	location.reload() 
-	alert("删除成功！");
 }
 
 
@@ -75,7 +79,7 @@ $(document).on("click", ".edit", function() {
 
 	edit_Id = $(this).parents("tr").attr("id");// attr所选元素属性值
 	if(edit_Id == "search_information"){
-		/*alert("编辑：" + search_student);*/
+//		alert("编辑：" + search_student);
 		$.ajax({
 			url : 'get_student_information',
 			type : 'post',
@@ -86,7 +90,7 @@ $(document).on("click", ".edit", function() {
 	}
 	
 	else{
-		/*alert("id：" + edit_Id);*/
+//		alert("id：" + edit_Id);
 		$.ajax({
 			url : 'get_student_information',
 			type : 'post',
@@ -129,9 +133,14 @@ $(document).on("click", "#editSave", function() {
 	
 })
 
-function studentInformationSaveCallback() {
+function studentInformationSaveCallback(data) {
 	$('#student_edit').modal('hide');
+	if(data.isRepeat=="1"){
+		alert("修改失败，学号已存在！");
+	}else{
+		alert("修改成功！");
+	}
 	location.reload() 
-	alert("修改成功！");
+	
 	
 }

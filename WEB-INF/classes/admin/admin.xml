@@ -142,6 +142,9 @@
 	</package>
 	
 	
+	
+	
+	
 <!-- 	用户注册请求 -->
 	<package name="user_request" namespace="/admin/user_request" extends="AdminDefault">
 		
@@ -234,14 +237,14 @@
         <!-- 删除学生信息 -->
 		<action name="student_manage_delete" class="admin.StudentManageAction" method="studentInformationDelete">
 			<result name="success" type="json">
-            	<param name="includeProperties">fullName,studentId,college,phoneNumber</param>           
+            	<param name="includeProperties">isException,fullName,studentId,college,phoneNumber</param>           
            </result>       
         </action>
         
         <!-- 保存学生信息 -->
 		<action name="student_information_save" class="admin.StudentManageAction" method="saveStudentInformation">
             <result name="success" type="json">
-            <param name="includeProperties">fullName,studentId,college,phoneNumber</param>
+            <param name="includeProperties">isRepeat,fullName,studentId,college,phoneNumber</param>
 			</result>        
         </action>
         
