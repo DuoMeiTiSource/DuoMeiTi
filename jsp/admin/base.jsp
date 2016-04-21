@@ -7,7 +7,7 @@
 	<div class="menu-list">
 	    <a href="/admin/classroom/" class="menu-button-middle"><span class="glyphicon glyphicon-blackboard">&nbsp;教室管理</span></a>
 	    <a href="/admin/repertory" class="menu-button-middle"><span class="glyphicon glyphicon-th-large">&nbsp;设备管理</span></a>
-	    <a href="/admin/classroomDevice/maintainRecords" class="menu-button-middle"><span class="glyphicon glyphicon-th">&nbsp;维修记录管理</span></a>
+	    <a href="/admin/repairRecord" class="menu-button-middle"><span class="glyphicon glyphicon-th">&nbsp;维修记录管理</span></a>
 	    <a href="/admin/student_manage/" class="menu-button-middle"><span class="glyphicon glyphicon-list-alt">&nbsp;在职学生管理</span></a>
 	    <a href="/admin/user_request/" class="menu-button-middle"><span class="glyphicon glyphicon-list-alt">&nbsp;用户注册请求</span></a>
 	    
@@ -15,9 +15,9 @@
 
 
 	    <a href="/admin/HomepageModify/" class="menu-button-middle"><span class="glyphicon glyphicon-list-alt">&nbsp;主页管理</span></a>
-	    <a href="/admin/batchImport" class="menu-button-middle"><span class="glyphicon glyphicon-list-alt">&nbsp;批量课表导入</span></a>
+	    <a href="/admin/batchImport/" class="menu-button-middle"><span class="glyphicon glyphicon-list-alt">&nbsp;批量导入</span></a>
 	    <a href="/admin/asdf" class="menu-button-middle"><span class="glyphicon glyphicon-list-alt">&nbsp;远程控制</span></a>
-	    <a href="/admincheckin/checkinrecords" class="menu-button-middle"><span class="glyphicon glyphicon-list-alt">&nbsp;签到管理</span></a>
+	    <a href="/admin/checkinManage" class="menu-button-middle"><span class="glyphicon glyphicon-list-alt">&nbsp;签到管理</span></a>
 	    
 	    <s:if test="!#session.role.equals(@util.Const@StudentToAdminRole)">
 		    <a href="/admin/modifypassword" class="menu-button-middle"><span class="glyphicon glyphicon-lock">&nbsp;修改密码</span></a>

@@ -96,11 +96,21 @@
 			<result>
 <!-- 				<param name="location">/jsp/admin/classroomManage.jsp</param> -->
 				<param name="location">${classroomManageJsp}</param>
-				<param name="build_id">${build_id}</param>
-				<param name="build_name">${build_name}</param>
+<!-- 				<param name="build_id">${build_id}</param> -->
+<!-- 				<param name="build_name">${build_name}</param> -->
 			</result>
 		</action>
 		<action name="classroomManageNew_*" class="common.ClassroomManageAction" method="{1}">
+			<result type="json">
+			</result>
+		</action>		
+	</package>
+	
+	
+	
+	
+	<package name="emergencyPublish"  namespace="/"  extends="Default">
+		<action name="emergencyPublish_*" class="common.EmergencyPublishAction" method="{1}">
 			<result type="json">
 			</result>
 		</action>

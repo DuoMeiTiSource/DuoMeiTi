@@ -14,11 +14,42 @@
 			</result>
 		</action>
 
-<!-- 		<action name="user_request"> -->
-<!-- 			<result> -->
-<!-- 				/jsp/admin/users_request.jsp -->
-<!-- 			</result> -->
-<!-- 		</action> -->
+
+<!-- 维修记录管理 -->
+		<action name="repairRecord" class="admin.RepairRecordAction">
+			<result>
+				/jsp/admin/repairRecord.jsp
+			</result>			
+		</action>
+		
+		<action name="repairRecord_*" class="admin.RepairRecordAction" method="{1}">
+			
+			<result name="success" type="json">
+				<param name="includeProperties">*</param>    
+			</result>			
+		</action>
+		
+<!-- 维修记录管理 END-->
+
+
+<!-- 签到管理checkinManage -->
+		<action name="checkinManage" class="admin.CheckinManageAction">
+			<result>
+				/jsp/admin/checkinrecord.jsp
+			</result>			
+		</action>
+		
+		<action name="checkinManage_*" class="admin.CheckinManageAction" method="{1}">
+			
+			<result name="success" type="json">
+				<param name="includeProperties">*</param>    
+			</result>			
+		</action>
+		
+<!-- 签到管理checkin END-->
+
+
+
 		
 		<action name="student_manage">
 			<result>
@@ -38,6 +69,7 @@
             </result>           
         </action>
 		
+<!-- 		设备管理 -->
 		<action name="repertory" class="admin.RepertoryAction">
 			<result name="success">
 				/jsp/admin/repertory.jsp
@@ -48,7 +80,11 @@
 			<result name="success" type="json">
 
 			</result>
-		</action> 
+		</action>
+		
+<!-- 		设备管理 END-->		
+		
+		 
 		<!-- 修改密码 -->
 		<action name="modifypassword" class="admin.ModifyPasswordAction">
 			<result name="success">
@@ -83,13 +119,14 @@
 		</action>
 		
 <!-- 		批量导入 -->
-		<action name="batchImport" class="admin.BatchImportAction" >
-			<result>/jsp/admin/batchImport.jsp</result>
-		</action>
+<!-- 		<action name="batchImportSchedule" class="admin.BatchImportAction" > -->
+<!-- 			<result>/jsp/admin/batchImport.jsp</result> -->
+<!-- 		</action> -->
 		
-		<action name="batchImport_*" class="admin.BatchImportAction" method="{1}">
-			<result name="success" type="json"></result>
-		</action>
+<!-- 		<action name="batchImport_*" class="admin.BatchImportAction" method="{1}"> -->
+<!-- 			<result name="success" type="json"></result> -->
+<!-- 		</action> -->
+		
 <!-- 		end 批量导入 -->
 		
 	</package>
@@ -100,17 +137,19 @@
 		
 	</package>
 <!-- end	新classroom -->
-	
-	
+
+
+
+
 		       
 	
 	<!-- 教室设备管理 -->
 	<package name="classroomDevice" namespace="/admin/classroomDevice" extends="AdminDefault">
-		<action name="maintainRecords" class="admin.TeachBuildingAction">
-			<result>
-				/jsp/admin/maintainRecords.jsp
-			</result>
-		</action>
+<!-- 		<action name="maintainRecords" class="admin.TeachBuildingAction"> -->
+<!-- 			<result> -->
+<!-- 				/jsp/admin/maintainRecords.jsp -->
+<!-- 			</result> -->
+<!-- 		</action> -->
 		
 		<action name="*_action" class="action.RepairAction" method="{1}">
 			<result name="query_repair">
@@ -141,7 +180,33 @@
 	
 	</package>
 	
-	
+<!--    批量导入 -->
+	<package name="batchImport" namespace="/admin/batchImport" extends="AdminDefault">
+		
+		<action name="">
+			<result name="success" type="redirect">class_schedule_import</result>
+		</action>
+		
+		<action name="class_schedule_import" class="admin.BatchImportAction" method="upload">
+			<result>
+				/jsp/admin/class_schedule_import.jsp
+			</result>
+		</action>
+		
+		<action name="classroom_import" class="admin.BatchImportAction" method="classroom">
+			<result>
+				/jsp/admin/classroom_import.jsp
+			</result>
+		</action>
+		
+		<action name="batchImport_*" class="admin.BatchImportAction" method="{1}">
+			<result name="success" type="json">
+				<param name="includeProperties">*</param>
+			</result>
+		</action>
+		
+	</package>	
+<!-- 		end 批量导入 -->
 	
 	
 	
@@ -201,7 +266,6 @@
 		</action>
 		
 		<!-- 规章制度 -->
-		<!-- <action name=rules class="admin."></action> -->
 		<action name="rule_show" class="admin.StudentManageAction" method="showRules">
 			<result name="success" >
 				/jsp/admin/student_manage/student_manage_rules.jsp
@@ -273,37 +337,10 @@
        	</result>
       </action>
      
-<!--         <action name="duty_manage" class="admin.StudentManageAction" method="dutyManager"> -->
-<!--         	<result>/jsp/admin/student_manage/dutyManage.jsp</result> -->
-<!--         </action> -->
+
 
 
                
-        <!-- 获取值班表 -->
-        <action name="getDutyTable" class="admin.StudentManageAction" method="getDutyTable">
-        	<result type="json">
-        		<param name="includeProperties">
-        			dutySchedule\[\d+\]\.studentId,
-        			dutySchedule\[\d+\]\.studentName,
-        			dutySchedule\[\d+\]\.time,
-        			teachBuildingId,
-        		</param>
-        	</result>
-        </action>
-        
-        <!-- 改变开关状态 -->
-        <action name="switchStatuChange" class="admin.StudentManageAction" method="switchStatuChange">
-        	<result type="json">
-        		<param name="includeProperties">log</param>
-        	</result>
-        </action>
-        
-        <!-- 删除选班 -->
-        <action name="deleteDuty" class="admin.StudentManageAction" method="deleteDuty">
-        	<result type="json">
-        		<param name="includeProperties">log</param>
-        	</result>
-        </action>
        	<!-- 搜索学生 -->
        	<action name="searchStudent" class="admin.StudentManageAction" method="searchStudent">
        		<result type="json">
@@ -314,18 +351,8 @@
        			</param>
        		</result>
        	</action>
-       	<!-- 添加值班 -->
-       	<action name="dutyAdd" class="admin.StudentManageAction" method="dutyAdd">
-       		<result type="json">
-       			<param name="includeProperties">
-       				log
-       			</param>
-       		</result>
-       	</action>
        	
-       	
-<!-- 学生值班管理 end -->
-       	
+
        	
        
         
@@ -391,21 +418,21 @@
 		
 		
 		
-		<action name="queryStuNameByStuId" class="admin.ClassroomManageAction" method="queryStuNameByStuId">
-			<result type="json">
-				<param name="includeProperties">queryResult</param>
-			</result>
-		</action>
-		<action name="addClassroom" class="admin.ClassroomManageAction" method="addClassroom">
-			<result type="json">
-				<param name="includeProperties">add_status</param>
-			</result>
-		</action>
-		<action name="addTeachBuilding" class="admin.TeachBuildingAction" method="addTeachBuilding">
-			<result type="json">
-				<param name="includeProperties">add_status</param>
-			</result>
-		</action>
+<!-- 		<action name="queryStuNameByStuId" class="admin.ClassroomManageAction" method="queryStuNameByStuId"> -->
+<!-- 			<result type="json"> -->
+<!-- 				<param name="includeProperties">queryResult</param> -->
+<!-- 			</result> -->
+<!-- 		</action> -->
+<!-- 		<action name="addClassroom" class="admin.ClassroomManageAction" method="addClassroom"> -->
+<!-- 			<result type="json"> -->
+<!-- 				<param name="includeProperties">add_status</param> -->
+<!-- 			</result> -->
+<!-- 		</action> -->
+<!-- 		<action name="addTeachBuilding" class="admin.TeachBuildingAction" method="addTeachBuilding"> -->
+<!-- 			<result type="json"> -->
+<!-- 				<param name="includeProperties">add_status</param> -->
+<!-- 			</result> -->
+<!-- 		</action> -->
 	</package>
 	
 	<!-- 教室管理 -->
@@ -416,8 +443,7 @@
 		
 		<action name="teachBuildingAction" class="admin.TeachBuildingAction">
 			<result>
-				/jsp/admin/teachbuilding.jsp
-				
+				/jsp/admin/teachbuilding.jsp				
 			</result>
 		</action>
 		
@@ -429,26 +455,20 @@
 		</action>
 		
 		<action name="classroom_manage" class="admin.ClassroomManageAction" method="classroomList">
-			<result>
-				<param name="location">/jsp/admin/classroom_manage.jsp</param>
-				<param name="build_id">${build_id}</param>
-				<param name="build_name">${build_name}</param>
-			</result>
+<!-- 			<result> -->
+<!-- 				<param name="location">/jsp/admin/classroom_manage.jsp</param> -->
+<!-- 				<param name="build_id">${build_id}</param> -->
+<!-- 				<param name="build_name">${build_name}</param> -->
+<!-- 			</result> -->
 		</action>
 		
-		<!--action name="classroom_select" class="admin.ClassroomManageAction" method="classroom_select">
-			<result type="redirectAction">
-				<param name="actionName">classroom_detail</param>
-				<param name="classroomselectIndex">${classroomselectIndex}</param>
-			</result>
-		</action-->
+
 		<action name="classroom_detail" class="admin.ClassroomDetailAction">
 			<result>
 				<param name="location">/jsp/admin/classroom_detail.jsp</param>
-				<!-- <param name="build_id">${classroom_id}</param>
-				<param name="build_name">${classroom_num}</param> -->
-				<param name="classroomselectIndex">${classroomId}</param>
-				<param name="build_name">${build_name}</param>
+				<param name="classroomId">${classroomId}</param>				
+<!-- 				<param name="classroomselectIndex">${classroomId}</param> -->
+<!-- 				<param name="build_name">${build_name}</param> -->
 			</result>
 		</action>
 		
